@@ -1,4 +1,5 @@
 #include "Matrix.hpp"
+#include <clapack.h>
 
 /**
  * Util funcion para visualizar matrices
@@ -44,4 +45,39 @@ anpi::Matrix<T> randomSymmetricSqr(const size_t N) {
         }
     }
     return temp;
+}
+
+
+template<typename T>
+void eig (const anpi::Matrix<T>& A, std::vector<T>& val, anpi::Matrix<T>& E){
+
+    lapack_int info, LDA, N;
+
+    LDA = A.rows();
+
+    int x = A.rows();
+
+    double tempa[x][x];
+
+    for (int i = 0; i<x; i++){
+        for (int j = 0; j<x; j++){
+            tempa [i][j] = A[i][j];
+        }
+    }
+
+    double tempw[x][x];
+
+
+    info = LAPACKE_dsyev(LAPACK_ROW_MAJOR, 'V', 'U', LDA, *tempa, LDA, *tempw);
+
+    for (int i = 0; i<x; i++){
+        for (int j = 0; j<x; j++){
+            E[i][j] = tempa [i][j];
+        }
+    }
+
+    for (int i = 0; i<A.rows(); i++){
+        val.push_back(tempw[0][i]);
+    }
+
 }
