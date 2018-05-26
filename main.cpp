@@ -10,7 +10,7 @@ int main() {
     anpi::Matrix<double> matrizA = randomSymmetricSqr<double>(10);
 
     std::cout << "-> Matriz cuadrada 10x10 generada con numeros aleatorios de -100 a 100" << std::endl;
-    matrizA.printm();
+    printMatrix(matrizA);
 
     anpi::Matrix<double> matrizE(10, 10, anpi::Matrix<double>::DoNotInitialize);
     std::vector<double> testVal;
@@ -19,7 +19,7 @@ int main() {
     eig<double>(matrizA, testVal, matrizE);
 
     std::cout << "-> Eigenvectores utilizando LAPACK: " << std::endl;
-    matrizE.printm();
+    printMatrix(matrizE);
 
     std::cout << "-> Eigenvalores utilizando LAPACK: " << std::endl;
     printVector(testVal);
@@ -30,7 +30,7 @@ int main() {
     anpi::Matrix<double> matrizRecons = reconstruirMatrix<double>(matrizE, testVal);
 
     std::cout << "-> Matriz reconstruida: " << std::endl;
-    matrizRecons.printm();
+    printMatrix(matrizRecons);
 
     std::cout << std::endl << "-> Norma de la matriz reconstruida (LAPACK): "
               << normaMatrix<double>(matrizA, matrizRecons) << std::endl << std::endl;
@@ -43,7 +43,7 @@ int main() {
     jacobi<double>(matrizA, v, matrizB);
 
     std::cout << "-> Eigenvectores utilizando Jacobi:" << std::endl;
-    matrizB.printm();
+    printMatrix(matrizB);
 
     std::cout << "-> Eigenvalores utilizando Jacobi:" << std::endl;
     printVector(v);
@@ -54,15 +54,14 @@ int main() {
     anpi::Matrix<double> matrizRecons2 = reconstruirMatrix<double>(matrizE, v);
 
     std::cout << "-> Matriz reconstruida a partir de los resultados de Jacobi:" << std::endl;
-    matrizRecons2.printm();
+    printMatrix(matrizRecons2);
     std::cout << std::endl << "-> Norma de la matriz reconstruida (Jacobi):"
               << normaMatrix<double>(matrizA, matrizRecons2) << std::endl << std::endl;
 
     sort<double>(v, matrizE);
 
     std::cout << "-> Eigenvectores producidos por LAPACK ordenados:" << std::endl;
-    matrizE.printm();
-
+    printMatrix(matrizE);
     std::cout << "-> Eigenvalores producidos por Jacobi ordenados:" << std::endl;
     printVector(v);
 
