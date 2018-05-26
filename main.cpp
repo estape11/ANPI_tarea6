@@ -3,14 +3,11 @@
 
 
 int main (){
-    int number;
-
-    std::cout<<"Introduzca el numero maximo que se desea generar aleatoriamente:"<<std::endl;
-    std::cin>>number;
-
+    
+    std::cout<<"--- Test Tarea 6 Eigensistemas ---"<<std::endl;
     anpi::Matrix<double> testA = randomSymmetricSqr<double>(10);
 
-    std::cout<<"Matriz de 10x10 generada con numeros aleatorios de 0 a "<< number<<std::endl;
+    std::cout<<"Matriz de 10x10 generada con numeros aleatorios de -100 a 100"<<std::endl;
     testA.printm();
 
     anpi::Matrix<double> testE(10, 10, anpi::Matrix<double>::DoNotInitialize);
