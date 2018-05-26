@@ -1,72 +1,69 @@
-#include <iostream>
 #include "include/Tarea6.hpp"
 
 
-int main (){
-    
-    std::cout<<"--- Test Tarea 6 Eigensistemas ---"<<std::endl;
-    anpi::Matrix<double> testA = randomSymmetricSqr<double>(10);
+int main() {
 
-    std::cout<<"Matriz de 10x10 generada con numeros aleatorios de -100 a 100"<<std::endl;
-    testA.printm();
+    std::cout << "--- Test Tarea 6 Eigensistemas ---" << std::endl << std::endl;
+    anpi::Matrix<double> matrizA = randomSymmetricSqr<double>(10);
 
-    anpi::Matrix<double> testE(10, 10, anpi::Matrix<double>::DoNotInitialize);
+    std::cout << "-> Matriz cuadrada 10x10 generada con numeros aleatorios de -100 a 100" << std::endl;
+    matrizA.printm();
+
+    anpi::Matrix<double> matrizE(10, 10, anpi::Matrix<double>::DoNotInitialize);
     std::vector<double> testVal;
 
     const clock_t begin_time = clock();
-    eig<double>(testA, testVal, testE);
+    eig<double>(matrizA, testVal, matrizE);
 
-    std::cout<<"Eigenvectores producidos usando LAPACK:"<<std::endl;
-    testE.printm();
+    std::cout << "-> Eigenvectores utilizando LAPACK: " << std::endl;
+    matrizE.printm();
 
-    std::cout<<"Eigenvalores producidos usando LAPACK:"<<std::endl;
-    for (int i = 0; i<10; i++){
-        std::cout<<testVal[i]<<std::endl;
-    }
+    std::cout << "-> Eigenvalores utilizando LAPACK: " << std::endl;
+    printVector(testVal);
 
-    std::cout<<std::endl<<"Tiempo que tomo el algortimo de LAPACK: "<< float(clock() - begin_time)/CLOCKS_PER_SEC<<std::endl<<std::endl;
+    std::cout << std::endl << "-> Tiempo tomado por LAPACK: " << float(clock() - begin_time) / CLOCKS_PER_SEC
+              << std::endl << std::endl;
 
-    anpi::Matrix<double> X = reconstruirMatrix<double>(testE, testVal);
+    anpi::Matrix<double> matrizRecons = reconstruirMatrix<double>(matrizE, testVal);
 
-    std::cout<<"Matriz reconstruida a partir de los resultados de LAPACK:"<<std::endl;
-    X.printm();
-    std::cout<<std::endl<<"Norma de la matriz reconstruida a partir de los resultados de LAPACK:"<<std::endl;
-    std::cout<<normaMatrix<double>(testA, X)<<std::endl<<std::endl;
+    std::cout << "-> Matriz reconstruida: " << std::endl;
+    matrizRecons.printm();
 
-    anpi::Matrix<double> testB;
+    std::cout << std::endl << "-> Norma de la matriz reconstruida (LAPACK): "
+              << normaMatrix<double>(matrizA, matrizRecons) << std::endl << std::endl;
+
+    anpi::Matrix<double> matrizB;
     std::vector<double> v;
 
     const clock_t begin_time2 = clock();
 
-    jacobi<double>(testA, v, testB);
+    jacobi<double>(matrizA, v, matrizB);
 
-    std::cout<<"Eigenvectores producidos usando Jacobi:"<<std::endl;
-    testB.printm();
+    std::cout << "-> Eigenvectores utilizando Jacobi:" << std::endl;
+    matrizB.printm();
 
+    std::cout << "-> Eigenvalores utilizando Jacobi:" << std::endl;
+    printVector(v);
 
-    std::cout<<"Eigenvalores producidos usando Jacobi:"<<std::endl;
-    for (std::vector<double>::const_iterator i = v.begin(); i != v.end(); ++i)
-        std::cout << *i << ' '<<std::endl;
+    std::cout << std::endl << "-> Tiempo tomado por Jacobi: " << float(clock() - begin_time2) / CLOCKS_PER_SEC
+              << std::endl << std::endl;
 
-    std::cout<<std::endl<< "Tiempo que tomo el algortimo de Jacobi: "<< float(clock() - begin_time2)/CLOCKS_PER_SEC<<std::endl<<std::endl;
+    anpi::Matrix<double> matrizRecons2 = reconstruirMatrix<double>(matrizE, v);
 
-    anpi::Matrix<double> Y = reconstruirMatrix<double>(testE, testVal);
+    std::cout << "-> Matriz reconstruida a partir de los resultados de Jacobi:" << std::endl;
+    matrizRecons2.printm();
+    std::cout << std::endl << "-> Norma de la matriz reconstruida (Jacobi):"
+              << normaMatrix<double>(matrizA, matrizRecons2) << std::endl << std::endl;
 
-    std::cout<<"Matriz reconstruida a partir de los resultados de Jacobi:"<<std::endl;
-    Y.printm();
-    std::cout<<std::endl<<"Norma de la matriz reconstruida a partir de los resultados de Jacobi:"<<std::endl;
-    std::cout<<normaMatrix<double>(testA, Y)<<std::endl<<std::endl;
+    sort<double>(v, matrizE);
 
-    sort<double>(testVal, testE);
+    std::cout << "-> Eigenvectores producidos por LAPACK ordenados:" << std::endl;
+    matrizE.printm();
 
-    std::cout<<"Comprobacion de la funcion sort() (comparando con los resultados de LAPACK)"<<std::endl<<"Eigenvectores producidos por LAPACK ordenados por sort():"<<std::endl;
-    testE.printm();
+    std::cout << "-> Eigenvalores producidos por Jacobi ordenados:" << std::endl;
+    printVector(v);
 
-    std::cout<<"Eigenvalores producidos por Jacobi ordenados por sort():"<<std::endl;
-    for (int i = 0; i<10; i++){
-        std::cout<<testVal[i]<<std::endl;
-    }
+    std::cout << "\n--- FIN ---" << std::endl;
 
-
-    return(1);
+    return true;
 }

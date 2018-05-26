@@ -27,6 +27,23 @@ void printMatrix(anpi::Matrix<T> matrix) {
 }
 
 /**
+ * Util funcion para visualizar matrices
+ * @tparam T
+ * @param matrix
+ */
+template<typename T>
+void printVector(std::vector<T> vector) {
+    std::cout << "{ ";
+    for (unsigned int i = 0; i < vector.size(); i++) {
+        if (i == vector.size() - 1) {
+            std::cout << vector[i];
+        } else std::cout << vector[i] << ", ";
+
+    }
+    std::cout << " }" << std::endl;
+}
+
+/**
  * Funcion que genera numeros aleatorios entre un rango de -100 a 100
  * @tparam T
  * @return
