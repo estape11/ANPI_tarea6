@@ -33,7 +33,7 @@ int main (){
 
     std::cout<<"Matriz reconstruida a partir de los resultados de LAPACK:"<<std::endl;
     X.printm();
-    std::cout<<std::endl<<"Norma de la matriz reconstruida a partir de los resultados de LAPACK:"<<std::std::endl;
+    std::cout<<std::endl<<"Norma de la matriz reconstruida a partir de los resultados de LAPACK:"<<std::endl;
     std::cout<<normaMatrix<double>(testA, X)<<std::endl<<std::endl;
 
     anpi::Matrix<double> testB;
@@ -62,7 +62,7 @@ int main (){
 
     sort<double>(testVal, testE);
 
-    std::cout<<"Comprobacion de la funcion sort() (comparando con los resultados de LAPACK)"<<std::endl<<"Eigenvectores producidos por LAPACK ordenados por sort():"<<endl;
+    std::cout<<"Comprobacion de la funcion sort() (comparando con los resultados de LAPACK)"<<std::endl<<"Eigenvectores producidos por LAPACK ordenados por sort():"<<std::endl;
     testE.printm();
 
     std::cout<<"Eigenvalores producidos por Jacobi ordenados por sort():"<<std::endl;
