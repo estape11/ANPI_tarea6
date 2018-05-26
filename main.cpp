@@ -1,6 +1,9 @@
 #include "include/Tarea6.hpp"
 
-
+/**
+ * Programa de prueba Tarea 6
+ * @return
+ */
 int main() {
 
     std::cout << "--- Test Tarea 6 Eigensistemas ---" << std::endl << std::endl;
