@@ -1,7 +1,6 @@
 #include "Matrix.hpp"
 #include <cstdlib>
 #include <vector>
-#include <clapack.h>
 #include <lapacke.h>
 
 /**
@@ -91,7 +90,7 @@ void eig(const anpi::Matrix<T> &A, std::vector<T> &val, anpi::Matrix<T> &E) {
  * @param d eigenvalores
  * @param v matriz con los eigenvectores asociados
  */
-void jacobiSort(vector<double> &d, anpi::Matrix<double> *v = NULL) {
+void jacobiSort(std::vector<double> &d, anpi::Matrix<double> *v = NULL) {
     unsigned int k;
     for (unsigned int i = 0; i < d.size() - 1; i++) {
         double p = d[k = i];
@@ -126,7 +125,7 @@ struct JacobiStruct {
     const double EPS;
 
     JacobiStruct(anpi::Matrix<double> &aa) : n(aa.rows()), a(aa), v(n, n), d(n), nrot(0),
-                                  EPS(numeric_limits<double>::epsilon()) {
+                                  EPS(std::numeric_limits<double>::epsilon()) {
         unsigned int i, j, ip, iq;
         double tresh, theta, tau, t, sm, s, h, g, c;
         std::vector<double> b(n), z(n);
@@ -147,7 +146,7 @@ struct JacobiStruct {
                     sm += abs(a[ip][iq]);
             }
             if (sm == 0.0) {
-                eigsrt(d, &v);
+                jacobiSort(d, &v);
                 return;
             }
             if (i < 4)
@@ -271,9 +270,9 @@ T normaMatrix(anpi::Matrix <T> A, anpi::Matrix <T> B) {
 template<typename T>
 anpi::Matrix <T> reconstruirMatrix(anpi::Matrix <T> E, std::vector <T> D) {
     unsigned int size = E.rows();
-    anpi::Matrix<T> A(size, size, Matrix<T>::DoNotInitialize);
-    anpi::Matrix<T> MD(size, size, Matrix<T>::DoNotInitialize);
-    anpi::Matrix<T> ET(size, size, Matrix<T>::DoNotInitialize);
+    anpi::Matrix<T> A(size, size, anpi::Matrix<T>::DoNotInitialize);
+    anpi::Matrix<T> MD(size, size, anpi::Matrix<T>::DoNotInitialize);
+    anpi::Matrix<T> ET(size, size, anpi::Matrix<T>::DoNotInitialize);
 
     for (unsigned int k = 0; k < size; k++) {
         MD[k][k] = D[k];
@@ -299,7 +298,7 @@ template<typename T>
 void sort(std::vector<T>& val, anpi::Matrix<T>& E){
     unsigned int size = E.rows();
     std::vector<T> valtemp;
-    anpi::Matrix<T> Etemp(size, size, Matrix<T>::DoNotInitialize);
+    anpi::Matrix<T> Etemp(size, size,anpi:: Matrix<T>::DoNotInitialize);
 
     for(unsigned int i = 0; i<size; i++){
         valtemp.push_back(val[size-1-i]);
