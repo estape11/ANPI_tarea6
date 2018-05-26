@@ -1,7 +1,12 @@
-#include "Matrix.hpp"
+#include <iostream>
 #include <cstdlib>
 #include <vector>
+#include "Matrix.hpp"
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
 #include <lapacke.h>
+#include <time.h>
 
 /**
  * Util funcion para visualizar matrices
