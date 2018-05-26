@@ -2,6 +2,9 @@
 
 /**
  * Programa de prueba Tarea 6
+ * Grupo EMD
+ * Ultima modificacion 25/05/2018
+ * ANPI 2018
  * @return
  */
 int main() {
